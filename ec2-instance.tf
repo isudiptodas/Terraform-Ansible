@@ -53,7 +53,7 @@ resource "aws_vpc_security_group_ingress_rule" "https" {
 # ec2 instance 
 resource "aws_instance" "ec2-server" {
     ami = "ami-019715e0d74f695be"
-    instance_type = "t2.micro"
+    instance_type = "t3.micro"
     # key_name = aws_key_pair.terraform-ec2.key_name
     security_groups = [aws_security_group.terraform-security.name]
     depends_on = [aws_security_group.terraform-security]
