@@ -1,9 +1,9 @@
 
 # key pair for ssh login
-/*resource "aws_key_pair" "terraform-ec2" {
+resource "aws_key_pair" "terraform-ec2" {
   key_name   = "terraform-ec2"
   public_key = file("./terra-key.pub")
-}*/
+}
 
 # default vpc for ec2
 resource "aws_default_vpc" "default" {
@@ -54,9 +54,9 @@ resource "aws_vpc_security_group_ingress_rule" "https" {
 resource "aws_instance" "ec2-server" {
     ami = "ami-019715e0d74f695be"
     instance_type = "t3.micro"
-    # key_name = aws_key_pair.terraform-ec2.key_name
+    key_name = aws_key_pair.terraform-ec2.key_name
     security_groups = [aws_security_group.terraform-security.name]
-    depends_on = [aws_security_group.terraform-security]
+    depends_on = [aws_security_group.terraform-security, aws_key_pair.terraform-ec2]
     root_block_device {
         volume_size = 8
         volume_type = "gp3"
