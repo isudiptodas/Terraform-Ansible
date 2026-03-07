@@ -55,7 +55,7 @@ resource "aws_instance" "ec2-server" {
     ami = "ami-019715e0d74f695be"
     instance_type = "t2.micro"
     # key_name = aws_key_pair.terraform-ec2.key_name
-    security_groups = [aws_security_group.terraform-security]
+    security_groups = [aws_security_group.terraform-security.name]
     depends_on = [aws_security_group.terraform-security]
     root_block_device {
         volume_size = 8
