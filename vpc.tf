@@ -1,3 +1,5 @@
+
+# new VPC
 resource "aws_vpc" "new-vpc" {
   cidr_block = "10.0.0.0/16"
   tags = { 
@@ -5,6 +7,7 @@ resource "aws_vpc" "new-vpc" {
   }
 }
 
+# internet gateway under a new VPC
 resource "aws_internet_gateway" "new-itg" {
   vpc_id = aws_vpc.new-vpc.id
   tags = {
@@ -12,6 +15,7 @@ resource "aws_internet_gateway" "new-itg" {
   }
 }
 
+# route table under a new VPC with routes
 resource "aws_route_table" "new-route-table" {
   vpc_id = aws_vpc.new-vpc.id
   route {
@@ -27,6 +31,7 @@ resource "aws_route_table" "new-route-table" {
   }
 }
 
+# subnets under VPC
 resource "aws_subnet" "public-subnet" {
   count = 3
   vpc_id     = aws_vpc.new-vpc.id
@@ -37,6 +42,7 @@ resource "aws_subnet" "public-subnet" {
   }
 }
 
+# connecting route tables with subnets
 resource "aws_route_table_association" "new-association" {
   subnet_id      = aws_subnet.public-subnet[count.index].id
   route_table_id = aws_route_table.new-route-table.id
